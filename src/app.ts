@@ -25,8 +25,16 @@ expressOasGenerator.handleResponses(app, {
   tags: ['Medications'],
   mongooseModels: mongoose.modelNames(),
   specOutputFileBehavior: 'RECREATE',
-  swaggerDocumentOptions: {},
-})
+  swaggerDocumentOptions: {
+    securityDefinitions: {
+      apiKeyAuth: {
+        type: 'apiKey',
+        in: 'header',
+        name: 'X-API-Key',
+      },
+    },
+  },
+});
 
 // Security middlewares
 app.use(helmet());
