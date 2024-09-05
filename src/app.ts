@@ -2,7 +2,7 @@ import express from 'express';
 import medicationRouter from './routes/medicationRoute';
 import searchRouter from './routes/searchRoute';
 import bulkRouter from './routes/bulkRoute';
-import * as expressOasGenerator from 'express-oas-generator';
+import expressOasGenerator from 'express-oas-generator';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 
