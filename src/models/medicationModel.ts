@@ -42,15 +42,9 @@ const medicationSchema = new Schema ({
             required: true,
         }],
     },
-    doseForm: {
-        coding: [{
-            type: Schema.Types.ObjectId,
-            ref: "coding",
-        }],
-    },
     manufacturer: {
         type: Schema.Types.ObjectId,
-        ref: "manufacturer",
+        ref: "Manufacturer",
         required: true,
     },
     ingredients: [{
