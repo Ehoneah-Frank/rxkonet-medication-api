@@ -2,8 +2,24 @@ import express from 'express';
 import medicationRouter from './routes/medicationRoute';
 import searchRouter from './routes/searchRoute';
 import bulkRouter from './routes/bulkRoute';
+import * as expressOasGenerator from 'express-oas-generator';
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
 
+dotenv.config();
+
+
+// create an express app
 const app = express();
+
+expressOasGenerator.handleResponses(app, {
+  specOutputFileBehavior: 'RECREATE',
+  swaggerDocumentOptions: {
+    alwaysServeDocs: true,
+    tags: ['Medication', 'Search'],
+  },
+  mongooseModels: mongoose.modelNames(),
+});
 
 // Middleware
 app.use(express.json());
@@ -12,7 +28,8 @@ app.use(express.json());
 app.use('/api', bulkRouter);
 app.use('/api', medicationRouter);
 app.use('/api', searchRouter);
-
+expressOasGenerator.handleRequests();
+app.use((req, res) => res.redirect('/api-docs/'));
 
 // Error handling middleware
 app.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction) => {
