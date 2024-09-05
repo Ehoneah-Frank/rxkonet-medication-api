@@ -2,7 +2,7 @@ import express from 'express';
 import medicationRouter from './routes/medicationRoute';
 import searchRouter from './routes/searchRoute';
 import bulkRouter from './routes/bulkRoute';
-import expressOasGenerator from 'express-oas-generator';
+const expressOasGenerator = require('express-oas-generator');
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 
@@ -26,8 +26,9 @@ app.use(express.json());
 
 // Routes
 app.use('/api', bulkRouter);
-app.use('/api', medicationRouter);
 app.use('/api', searchRouter);
+app.use('/api', medicationRouter);
+
 expressOasGenerator.handleRequests();
 app.use((req, res) => res.redirect('/api-docs/'));
 
