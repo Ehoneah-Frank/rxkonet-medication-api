@@ -10,6 +10,7 @@ import medicationRouter from './routes/medicationRoute';
 import searchRouter from './routes/searchRoute';
 import bulkRouter from './routes/bulkRoute';
 import expressOasGenerator from 'express-oas-generator';
+import mongoose from 'mongoose';
 
 
 import validateApiKey from './middlewares/validateApiKey';
@@ -19,10 +20,17 @@ import validateApiKey from './middlewares/validateApiKey';
 
 // create an express app
 const app = express();
+expressOasGenerator.handleResponses(app, {
+  alwaysServeDocs: true,
+  tags: ['Medications'],
+  mongooseModels: mongoose.modelNames(),
+  specOutputFileBehavior: 'RECREATE',
+  swaggerDocumentOptions: {},
+})
 
 // Security middlewares
 app.use(helmet());
-app.use(cors());
+app.use(cors({credentials: true, origin: '*'}));
 
 // Rate limiting
 const limiter = rateLimit({
@@ -42,7 +50,7 @@ app.use('/api/v1', bulkRouter);
 app.use('/api/v1', searchRouter);
 app.use('/api/v1', medicationRouter);
 
-expressOasGenerator.init(app, {});
+expressOasGenerator.handleRequests();
 app.use((req, res) => res.redirect('/api-docs/'));
 
 // Error handling middleware
