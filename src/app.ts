@@ -1,35 +1,48 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
+
 import express from 'express';
+import rateLimit from 'express-rate-limit';
+import cors from 'cors';
+import helmet from 'helmet';
 import medicationRouter from './routes/medicationRoute';
 import searchRouter from './routes/searchRoute';
 import bulkRouter from './routes/bulkRoute';
-const expressOasGenerator = require('express-oas-generator');
-import mongoose from 'mongoose';
-import dotenv from 'dotenv';
+import expressOasGenerator from 'express-oas-generator';
 
-dotenv.config();
+
+import validateApiKey from './middlewares/validateApiKey';
+
+
 
 
 // create an express app
 const app = express();
 
-expressOasGenerator.handleResponses(app, {
-  specOutputFileBehavior: 'RECREATE',
-  swaggerDocumentOptions: {
-    alwaysServeDocs: true,
-    tags: ['Medication', 'Search'],
-  },
-  mongooseModels: mongoose.modelNames(),
+// Security middlewares
+app.use(helmet());
+app.use(cors());
+
+// Rate limiting
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
 });
+app.use(limiter);
 
 // Middleware
 app.use(express.json());
 
-// Routes
-app.use('/api', bulkRouter);
-app.use('/api', searchRouter);
-app.use('/api', medicationRouter);
+// API key validation for all routes
+app.use(validateApiKey);
 
-expressOasGenerator.handleRequests();
+// Routes
+app.use('/api/v1', bulkRouter);
+app.use('/api/v1', searchRouter);
+app.use('/api/v1', medicationRouter);
+
+expressOasGenerator.init(app, {});
 app.use((req, res) => res.redirect('/api-docs/'));
 
 // Error handling middleware
