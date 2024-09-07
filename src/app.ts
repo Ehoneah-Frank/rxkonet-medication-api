@@ -13,7 +13,7 @@ import expressOasGenerator from 'express-oas-generator';
 import mongoose from 'mongoose';
 
 
-import validateApiKey from './middlewares/validateApiKey';
+
 
 
 
@@ -25,15 +25,7 @@ expressOasGenerator.handleResponses(app, {
   tags: ['Medications'],
   mongooseModels: mongoose.modelNames(),
   specOutputFileBehavior: 'RECREATE',
-  swaggerDocumentOptions: {
-    securityDefinitions: {
-      apiKeyAuth: {
-        type: 'apiKey',
-        in: 'header',
-        name: 'X-API-Key',
-      },
-    },
-  },
+  swaggerDocumentOptions: {}
 });
 
 // Security middlewares
@@ -50,8 +42,7 @@ app.use(limiter);
 // Middleware
 app.use(express.json());
 
-// API key validation for all routes
-app.use(validateApiKey);
+
 
 // Routes
 app.use('/api/v1', bulkRouter);
