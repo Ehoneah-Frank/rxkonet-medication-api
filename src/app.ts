@@ -25,7 +25,7 @@ import mongoose from 'mongoose';
 const app = express();
 expressOasGenerator.handleResponses(app, {
   alwaysServeDocs: true,
-  tags: ['Medications'],
+  tags: ['Medications', 'Identifiers', 'Manufacturers', 'Codings'],
   mongooseModels: mongoose.modelNames(),
   specOutputFileBehavior: 'RECREATE',
   swaggerDocumentOptions: {}
