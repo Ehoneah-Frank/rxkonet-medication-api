@@ -9,6 +9,9 @@ import helmet from 'helmet';
 import medicationRouter from './routes/medicationRoute';
 import searchRouter from './routes/searchRoute';
 import bulkRouter from './routes/bulkRoute';
+import identifierRouter from './routes/identifierRoute';
+import manufacturerRouter from './routes/manufacturerRoute';
+import codingRouter from './routes/codingRoute';
 import expressOasGenerator from 'express-oas-generator';
 import mongoose from 'mongoose';
 
@@ -48,7 +51,9 @@ app.use(express.json());
 app.use('/api/v1', bulkRouter);
 app.use('/api/v1', searchRouter);
 app.use('/api/v1', medicationRouter);
-
+app.use('/api/v1', identifierRouter);
+app.use('/api/v1', manufacturerRouter);
+app.use('/api/v1', codingRouter)
 expressOasGenerator.handleRequests();
 app.use((req, res) => res.redirect('/api-docs/'));
 
