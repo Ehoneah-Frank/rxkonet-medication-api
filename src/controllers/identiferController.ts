@@ -65,3 +65,39 @@ export const deleteIdentifier = async (req: Request, res: Response) => {
     res.status(500).json({ error: "Failed to delete identifier" });
   }
 };
+
+// Get all identifiers
+export const getAllIdentifiers = async (req: Request, res: Response) => {
+  try {
+    const identifiers = await identifierModel.find();
+    res.json(identifiers);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Failed to fetch identifiers" });
+  }
+};
+
+// Get paginated identifiers
+export const getPaginatedIdentifiers = async (req: Request, res: Response) => {
+  try {
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = parseInt(req.query.limit as string) || 10;
+    const skip = (page - 1) * limit;
+
+    const identifiers = await identifierModel.find()
+      .skip(skip)
+      .limit(limit);
+
+    const total = await identifierModel.countDocuments();
+
+    res.json({
+      data: identifiers,
+      total,
+      page,
+      pages: Math.ceil(total / limit)
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Failed to fetch paginated identifiers" });
+  }
+};

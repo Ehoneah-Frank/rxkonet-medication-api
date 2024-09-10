@@ -173,6 +173,50 @@ export const deleteMedication = async (req: Request, res: Response) => {
   }
 };
 
+// Get all medications
+export const getAllMedications = async (req: Request, res: Response) => {
+  try {
+    const medications = await medicationModel.find()
+      .populate("code.coding")
+      .populate("ingredients.item.coding")
+      .populate("identifier")
+      .populate("manufacturer");
+    res.json(medications);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Failed to fetch medications" });
+  }
+};
+
+// Get paginated medications
+export const getPaginatedMedications = async (req: Request, res: Response) => {
+  try {
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = parseInt(req.query.limit as string) || 10;
+    const skip = (page - 1) * limit;
+
+    const medications = await medicationModel.find()
+      .populate("code.coding")
+      .populate("ingredients.item.coding")
+      .populate("identifier")
+      .populate("manufacturer")
+      .skip(skip)
+      .limit(limit);
+
+    const total = await medicationModel.countDocuments();
+
+    res.json({
+      data: medications,
+      total,
+      page,
+      pages: Math.ceil(total / limit)
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Failed to fetch paginated medications" });
+  }
+};
+
 
 
 

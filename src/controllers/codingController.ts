@@ -76,3 +76,28 @@ export const getAllCodings = async (req: Request, res: Response) => {
     res.status(500).json({ error: "Failed to fetch codings" });
   }
 };
+
+// Add a new function for paginated codings
+export const getPaginatedCodings = async (req: Request, res: Response) => {
+  try {
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = parseInt(req.query.limit as string) || 10;
+    const skip = (page - 1) * limit;
+
+    const codings = await codingModel.find()
+      .skip(skip)
+      .limit(limit);
+
+    const total = await codingModel.countDocuments();
+
+    res.json({
+      data: codings,
+      total,
+      page,
+      pages: Math.ceil(total / limit)
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Failed to fetch paginated codings" });
+  }
+};

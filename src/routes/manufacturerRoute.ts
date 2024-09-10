@@ -1,6 +1,6 @@
 import { body } from "express-validator";
 import { Router } from "express";
-import { createManufacturer, getManufacturerById, updateManufacturer, deleteManufacturer, getAllManufacturers } from "../controllers/manufacturerController";
+import { createManufacturer, getManufacturerById, updateManufacturer, deleteManufacturer, getAllManufacturers, getPaginatedManufacturers } from "../controllers/manufacturerController";
 import { validateInput } from "../middlewares/validationMiddleware";
 
 const manufacturerRouter = Router();
@@ -30,5 +30,7 @@ manufacturerRouter.patch('/manufacturers/:id',
 );
 
 manufacturerRouter.delete('/manufacturers/:id', deleteManufacturer);
+
+manufacturerRouter.get('/manufacturers/paginated', getPaginatedManufacturers);
 
 export default manufacturerRouter;

@@ -1,6 +1,6 @@
 import { body } from "express-validator";
 import { Router } from "express";
-import { createCoding, getCodingById, updateCoding, deleteCoding, getAllCodings } from "../controllers/codingController";
+import { createCoding, getCodingById, updateCoding, deleteCoding, getAllCodings, getPaginatedCodings } from "../controllers/codingController";
 import { validateInput } from "../middlewares/validationMiddleware";
 
 const codingRouter = Router();
@@ -30,5 +30,7 @@ codingRouter.patch('/codings/:id',
 );
 
 codingRouter.delete('/codings/:id', deleteCoding);
+
+codingRouter.get('/codings/paginated', getPaginatedCodings);
 
 export default codingRouter;

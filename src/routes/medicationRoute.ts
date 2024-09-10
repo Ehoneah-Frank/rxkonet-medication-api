@@ -1,6 +1,6 @@
 import { body } from "express-validator";
 import { Router } from "express";
-import { createMedication, getMedicationById, updateMedication, deleteMedication } from "../controllers/medicationController";
+import { createMedication, getMedicationById, updateMedication, deleteMedication, getAllMedications, getPaginatedMedications } from "../controllers/medicationController";
 import { validateInput } from "../middlewares/validationMiddleware";
 
 const medicationRouter = Router();
@@ -55,5 +55,8 @@ medicationRouter.patch('/medications/:id',
 );
 
 medicationRouter.delete('/medications/:id', deleteMedication);
+
+medicationRouter.get('/medications', getAllMedications);
+medicationRouter.get('/medications/paginated', getPaginatedMedications);
 
 export default medicationRouter;
