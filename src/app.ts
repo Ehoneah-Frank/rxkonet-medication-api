@@ -21,8 +21,14 @@ import mongoose from 'mongoose';
 
 
 
+
 // create an express app
 const app = express();
+
+app.use(cors({
+  origin: '*',
+  credentials: true
+}));
 expressOasGenerator.handleResponses(app, {
   alwaysServeDocs: true,
   tags: ['Medications', 'Identifiers', 'Manufacturers', 'Codings'],
