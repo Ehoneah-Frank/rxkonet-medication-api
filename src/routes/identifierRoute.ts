@@ -7,8 +7,16 @@ const identifierRouter = Router();
 
 /**
  * @swagger
+ * tags:
+ *   name: Identifiers
+ *   description: API for managing identifiers
+ */
+
+/**
+ * @swagger
  * /identifiers:
  *   post:
+ *     tags: [Identifiers]
  *     summary: Create a new identifier
  *     requestBody:
  *       required: true

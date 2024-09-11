@@ -5,6 +5,90 @@ import { validateInput } from "../middlewares/validationMiddleware";
 
 const medicationRouter = Router();
 
+/**
+ * @swagger
+ * tags:
+ *   name: Medications
+ *   description: API for managing medications
+ */
+
+/**
+ * @swagger
+ * /medications:
+ *   post:
+ *     tags: [Medications]
+ *     summary: Create a new medication
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               resourceType:
+ *                 type: string
+ *               status:
+ *                 type: string
+ *               brandName:
+ *                 type: string
+ *               code:
+ *                 type: object
+ *                 properties:
+ *                   coding:
+ *                     type: array
+ *                     items:
+ *                       type: object
+ *                       properties:
+ *                         system:
+ *                           type: string
+ *                         code:
+ *                           type: string
+ *                         display:
+ *                           type: string
+ *               manufacturer:
+ *                 type: object
+ *                 properties:
+ *                   name:
+ *                     type: string
+ *               ingredients:
+ *                 type: array
+ *                 items:
+ *                   type: object
+ *                   properties:
+ *                     item:
+ *                       type: object
+ *                       properties:
+ *                         coding:
+ *                           type: array
+ *                           items:
+ *                             type: object
+ *                             properties:
+ *                               system:
+ *                                 type: string
+ *                               code:
+ *                                 type: string
+ *                               display:
+ *                                 type: string
+ *                     strength:
+ *                       type: object
+ *                       properties:
+ *                         numerator:
+ *                           type: object
+ *                           properties:
+ *                             value:
+ *                               type: number
+ *                             unit:
+ *                               type: string
+ *                             system:
+ *                               type: string
+ *                             code:
+ *                               type: string
+ *     responses:
+ *       '201':
+ *         description: Medication created successfully
+ *       '400':
+ *         description: Invalid input
+ */
 medicationRouter.post('/medications', 
     [
         body('resourceType').isString().notEmpty(),
@@ -26,6 +110,25 @@ medicationRouter.post('/medications',
     createMedication
 );
 
+/**
+ * @swagger
+ * /medications/{id}:
+ *   get:
+ *     tags: [Medications]
+ *     summary: Get a medication by ID
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         description: The ID of the medication
+ *         schema:
+ *           type: string
+ *     responses:
+ *       '200':
+ *         description: Medication found
+ *       '404':
+ *         description: Medication not found
+ */
 medicationRouter.get('/medications/:id', getMedicationById);
 
 medicationRouter.patch('/medications/:id',
