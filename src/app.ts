@@ -14,13 +14,7 @@ import manufacturerRouter from './routes/manufacturerRoute';
 import codingRouter from './routes/codingRoute';
 import expressOasGenerator from 'express-oas-generator';
 import mongoose from 'mongoose';
-
-
-
-
-
-
-
+import { swaggerUi, swaggerDocs } from './swagger';
 
 // create an express app
 const app = express();
@@ -29,6 +23,7 @@ app.use(cors({
   origin: '*',
   credentials: true
 }));
+
 expressOasGenerator.handleResponses(app, {
   alwaysServeDocs: true,
   tags: ['Medications', 'Identifiers', 'Manufacturers', 'Codings'],
@@ -51,7 +46,8 @@ app.use(limiter);
 // Middleware
 app.use(express.json());
 
-
+// Swagger UI setup
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 // Routes
 app.use('/api/v1', bulkRouter);
@@ -73,5 +69,11 @@ app.use((err: Error, req: express.Request, res: express.Response, next: express.
 app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
   res.status(404).json({ error: 'Not Found' });
 });
+
+// // Start the server
+// const PORT = process.env.PORT || 7000;
+// app.listen(PORT, () => {
+//   console.log(`Server is running on port ${PORT}`);
+// });
 
 export default app;
