@@ -5,9 +5,9 @@ const swaggerOptions = {
   swaggerDefinition: {
     openapi: '3.0.0',
     info: {
-      title: 'Identifier API',
+      title: 'rxkonet-medication-api',
       version: '1.0.0',
-      description: 'API for managing identifiers',
+      description: 'API for managing medications and related resources',
     },
     servers: [
       {
