@@ -48,6 +48,7 @@ identifierRouter.post('/identifiers',
  * @swagger
  * /identifiers/{id}:
  *   get:
+ *     tags: [Identifiers]
  *     summary: Get an identifier by ID
  *     parameters:
  *       - name: id
@@ -68,6 +69,7 @@ identifierRouter.get('/identifiers/:id', getIdentifierById);
  * @swagger
  * /identifiers:
  *   get:
+ *     tags: [Identifiers]
  *     summary: Get all identifiers
  *     responses:
  *       '200':
@@ -92,6 +94,7 @@ identifierRouter.get('/identifiers', getAllIdentifiers);
  * @swagger
  * /identifiers/paginated:
  *   get:
+ *     tags: [Identifiers]
  *     summary: Get paginated identifiers
  *     parameters:
  *       - name: page
@@ -114,6 +117,7 @@ identifierRouter.get('/identifiers/paginated', getPaginatedIdentifiers);
  * @swagger
  * /identifiers/{id}:
  *   patch:
+ *     tags: [Identifiers]
  *     summary: Update an identifier
  *     parameters:
  *       - name: id
@@ -152,6 +156,7 @@ identifierRouter.patch('/identifiers/:id',
  * @swagger
  * /identifiers/{id}:
  *   delete:
+ *     tags: [Identifiers]
  *     summary: Delete an identifier
  *     parameters:
  *       - name: id

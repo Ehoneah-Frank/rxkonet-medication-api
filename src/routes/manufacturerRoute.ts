@@ -7,8 +7,16 @@ const manufacturerRouter = Router();
 
 /**
  * @swagger
+ * tags:
+ *   name: Manufacturers
+ *   description: API for managing manufacturers
+ */
+
+/**
+ * @swagger
  * /manufacturers:
  *   post:
+ *     tags: [Manufacturers]
  *     summary: Create a new manufacturer
  *     requestBody:
  *       required: true
@@ -43,6 +51,7 @@ manufacturerRouter.post('/manufacturers',
  * @swagger
  * /manufacturers:
  *   get:
+ *     tags: [Manufacturers]
  *     summary: Get all manufacturers
  *     responses:
  *       '200':
@@ -69,6 +78,7 @@ manufacturerRouter.get('/manufacturers', getAllManufacturers);
  * @swagger
  * /manufacturers/{id}:
  *   get:
+ *     tags: [Manufacturers]
  *     summary: Get a manufacturer by ID
  *     parameters:
  *       - name: id
@@ -89,6 +99,7 @@ manufacturerRouter.get('/manufacturers/:id', getManufacturerById);
  * @swagger
  * /manufacturers/{id}:
  *   patch:
+ *     tags: [Manufacturers]
  *     summary: Update a manufacturer
  *     parameters:
  *       - name: id
@@ -130,6 +141,7 @@ manufacturerRouter.patch('/manufacturers/:id',
  * @swagger
  * /manufacturers/{id}:
  *   delete:
+ *     tags: [Manufacturers]
  *     summary: Delete a manufacturer
  *     parameters:
  *       - name: id
@@ -150,6 +162,7 @@ manufacturerRouter.delete('/manufacturers/:id', deleteManufacturer);
  * @swagger
  * /manufacturers/paginated:
  *   get:
+ *     tags: [Manufacturers]
  *     summary: Get paginated manufacturers
  *     parameters:
  *       - name: page
